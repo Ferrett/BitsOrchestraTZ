@@ -59,6 +59,45 @@ namespace BitsOrchestraTZ.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit([FromBody] Contact updatedContact)
+        {
+            if (updatedContact == null)
+            {
+                return Json(new { success = false, message = "Invalid data." });
+            }
+
+            var contact = await _context.Contacts.FindAsync(updatedContact.ContactID);
+            if (contact == null)
+            {
+                return Json(new { success = false, message = "Contact not found." });
+            }
+
+            // Update contact details
+            contact.Name = updatedContact.Name;
+            contact.DateOfBirth = updatedContact.DateOfBirth;
+            contact.Married = updatedContact.Married;
+            contact.Phone = updatedContact.Phone;
+            contact.Salary = updatedContact.Salary;
+
+            await _context.SaveChangesAsync();
+            return Json(new { success = true });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var contact = await _context.Contacts.FindAsync(id);
+            if (contact == null)
+            {
+                return NotFound();
+            }
+
+            _context.Contacts.Remove(contact);
+            await _context.SaveChangesAsync();
+            return Json(new { success = true });
+        }
     }
 
     public class FileUploadViewModel
