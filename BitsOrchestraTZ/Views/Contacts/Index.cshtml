@@ -1,0 +1,29 @@
+﻿@using BitsOrchestraTZ.Services
+@model IEnumerable<Contact>
+
+<h1>Contacts Management</h1>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">@TempData["Message"]</div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<!-- File Upload Partial -->
+<h2>Upload CSV</h2>
+@await Html.PartialAsync("_FileUpload")
+
+<!-- Contacts Table Partial -->
+<h2>Contacts List</h2>
+@if (!Model.Any())
+{
+    <p>No contacts found.</p>
+}
+else
+{
+    @await Html.PartialAsync("_ContactsTable", Model)
+}
