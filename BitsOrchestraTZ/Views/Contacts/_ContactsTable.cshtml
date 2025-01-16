@@ -21,8 +21,6 @@
                 <td><input type="date" class="form-control dob-input" value="@contact.DateOfBirth.ToString("yyyy-MM-dd")" /></td>
                 <td>
                     <select class="form-control married-input">
-@*                         <option value="true">@Html.Raw(GetSelectedAttribute(contact.Married, true))>Yes</option>
-                        <option value="false">@Html.Raw(GetSelectedAttribute(contact.Married, false))>No</option> *@
                     </select>
                 </td>
                 <td><input type="text" class="form-control phone-input" value="@contact.Phone" /></td>
@@ -86,7 +84,7 @@
                 success: function (response) {
                     if (response.success) {
                         alert("Contact deleted successfully!");
-                        row.remove(); // Remove the deleted row
+                        row.remove();
                     } else {
                         alert("Error: Could not delete contact.");
                     }
